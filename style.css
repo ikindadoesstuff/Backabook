@@ -1,5 +1,5 @@
 /* Import fonts */
-@import url('https://fonts.googleapis.com/css2?family=Chonburi&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Chonburi&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Rubik+Marker+Hatch&display=swap');
 
 * {
     margin: 0;
@@ -73,6 +73,13 @@ body {
     display: flexbox;
     flex-direction: column;
     height: 100vh;
+    font-family: 'DM Sans';
+
+    
+    font-family: "DM Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
 }
 
 main {
@@ -87,17 +94,18 @@ footer {
 }
 
 .bookstore-name {
-    font-family: "Chonburi";
-    font-size: 1.2em;
+    font-family: "Rubik Marker Hatch";
+    font-size: 2em;
     font-weight: 800;
 }
 
 button, input {
     border-radius: 0;
     border: black 1px solid;
-    padding: 5px;
+    padding: 5px 8px;
     background-color: #ffffff;
     height:40px;
+    font-family: inherit;
 }
 
 #searchForm {
