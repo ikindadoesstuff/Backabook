@@ -25,7 +25,7 @@
         <!-- Search Bar -->
         <div class="search-container">
             <input type="text" id="searchInput" placeholder="Search books...">
-            <button onclick="performSearch()">Search</button>
+            <button id="searchButton" onclick="performSearch()">Search</button>
         </div>
 
         <!-- Right Section -->
@@ -48,3 +48,9 @@
     <script src="script.js"> </script>
 </body>
 </html>
+
+<?php
+
+function performSearch(string $searchQuery) {
+
+}
