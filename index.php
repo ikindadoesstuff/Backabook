@@ -1,3 +1,11 @@
+<?php
+
+function performSearch(string $searchInput) {
+    echo $searchInput;   
+}
+
+?>
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -24,8 +32,10 @@
 
         <!-- Search Bar -->
         <div class="search-container">
-            <input type="text" id="searchInput" placeholder="Search books...">
-            <button id="searchButton" onclick="performSearch()">Search</button>
+            <form>
+                <input type="text" id="searchInput" name="searchInput" placeholder="Search books...">
+                <button id="searchButton" onclick="performSearch($_POST['searchInput'])">Search</button>
+            </form>
         </div>
 
         <!-- Right Section -->
@@ -49,8 +59,3 @@
 </body>
 </html>
 
-<?php
-
-function performSearch(string $searchQuery) {
-
-}
