@@ -102,6 +102,7 @@ footer {
     font-weight: 800;
     cursor: pointer;
     transition: 0.2s;
+    user-select: none;
     /* border-bottom: white 4px solid; */
 }
 
@@ -266,18 +267,19 @@ h3 {
 .search-item {
     /* background-color: #ffffff; */
     border-bottom: #a3a3a3 solid 2px;
+    border-right: #a3a3a3 solid 2px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     /* color: white; */
     padding: 10px;
-    margin: 0 15px 0 15px;
+    margin: 0 0 0 15px;
     transition: background-color 0.5s linear;
 }
 .search-item:hover {
     background-color: #eeeeee;
     background: linear-gradient(90deg,rgba(255, 255, 255, 1) 0%, rgba(238, 238, 238, 1) 100%);
-    cursor: pointer;
+    /* cursor: pointer; */
 }
 .search-item-right {
     display: flex;

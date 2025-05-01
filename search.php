@@ -3,10 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Backabush Bookstore</title>
+    <title>Search</title>
     <link href="./style.css" rel="stylesheet" type="text/css">
-    <script src="script.js"> </script>
+    <link rel="icon" type="image/x-icon" href="/img/favicon.ico">
 </head>
 
 <body>
@@ -52,14 +51,15 @@
                     if ($result) {
                         while ($book = $result->fetch_assoc()) {
                             echo 
-                                '<div class="search-item">' .
+                                '
+                                <div class="search-item">' .
                                     '<div class="search-item-left">' .
                                         '<h2>' . htmlspecialchars($book["TITLE"]) . '</h2>' .
                                         '<h3>' . $book["AUTHOR"] . ' (' . htmlspecialchars($book["PUBLICATION_YEAR"]) . ')</h3>' .
                                         '<p class="additional-info">' . htmlspecialchars($book["DESCRIPTION"]) . '</p>' .
                                     '</div>'.
                                     '<div class="search-item-right">' .
-                                        '<h2>$'. htmlspecialchars($book["PRICE"]) .' BZD</h2>'.
+                                        '<h2>$'. htmlspecialchars(number_format($book["PRICE"],2) ).' BZD</h2>'.
 
                                         // view details button to go to details page
                                         '<a href="book-details.php?isbn=' . urlencode($book["ISBN"]) . '" class="view-details-button">' .

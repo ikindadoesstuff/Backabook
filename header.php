@@ -1,4 +1,5 @@
 <header>
+    <script src="script.js"> </script>
     <!-- Left Section -->
     <div class="header-left">
         <div class="bookstore-name" id="home-button">BACKABOOK</div>
