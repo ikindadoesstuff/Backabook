@@ -10,7 +10,7 @@ if ($connection->connect_error) {
     die("Connection Failed: " . $connection->connect_error);
 }
 
-echo "Connected to " . $database . " successfully.";
+// echo "Connected to " . $database . " successfully.";
 
 function queryDB (string $sql) {
     global $connection;
