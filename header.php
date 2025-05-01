@@ -7,10 +7,18 @@ if (!empty($_GET['searchInput'])) {
 }
 
 function performSearch(string $searchInput) {
-    alert($searchInput); 
-    $result = queryDB("SELECT * FROM `book_infos`");
+    alert($searchInput);
+    $sqlQuery = "SELECT * FROM `book_infos` WHERE " .
+        "CAST(ISBN AS CHAR) LIKE '%" . $searchInput . "%' OR " .
+        "TITLE LIKE '%" . $searchInput . "%' OR " .
+        "AUTHOR LIKE '%" . $searchInput . "%' OR " .
+        "CAST(PUBLICATION_YEAR AS CHAR) LIKE '%" . $searchInput . "%' OR " .
+        "DESCRIPTION LIKE '%" . $searchInput . "%' OR " .
+        "PUBLISHER LIKE '%" . $searchInput . "%' OR " .
+        "GENRE LIKE '%" . $searchInput . "%'";
+    $result = queryDB($sqlQuery);
     for ($row = $result->fetch_array(); $row != null; $row = $result->fetch_array()) {
-        echo "<p>".$row[1]."</p>";
+        echo "<p>".$row[1]." ".$row[2]." ".$row[3]." ".$row[4]." "."</p>";
     }
     // echo "<h2>".$searchInput."</h2>";
 }
@@ -40,14 +48,14 @@ function alert($msg) {
     <!-- Search Bar -->
     <div class="search-container">
         <form method="get" id="searchForm">
-            <input type="text" id="searchInput" name="searchInput" placeholder="Search ISBN, Title, Description or Author...">
+            <input type="text" id="searchInput" name="searchInput" placeholder="Search Title, ISBN, Author, Year, etc...">
             <input type="submit" id="searchButton" value="Search">
         </form>
     </div>
 
     <!-- Right Section -->
     <div class="header-right">
-        <button onclick="redirect('wishlist')">Wishlist</button>
+        <button onclick="redirect('cart')">Cart</button>
         <button onclick="redirect('login')">Login/Sign Up</button>
     </div>
 </header>

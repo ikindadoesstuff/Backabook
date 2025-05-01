@@ -53,7 +53,8 @@ header {
     align-items: center;
     gap: 15px;
     padding:10px;
-    background-color: #736E66;
+    background-color: #212320;
+    border-bottom: white 2px dashed;
 }
 
 .search-container {
@@ -66,7 +67,7 @@ header {
 
 .header-right {
     display: flex;
-    gap: 15px;
+    gap: 3px;
 }
 
 body {
@@ -94,7 +95,7 @@ footer {
 }
 
 .bookstore-name {
-    font-family: "Rubik Marker Hatch";
+    font-family: "Rubik Marker Hatch", "Chonburi";
     font-size: 2em;
     font-weight: 800;
 }
@@ -114,11 +115,14 @@ button, input {
     flex-grow: 1;
     justify-content: center;
     flex-wrap: nowrap;
-    gap:0px;
+    gap:3px;
 }
 
 input[type="text"] {
     flex-grow: 1;
+}
+input[type="text"]:focus {
+    outline: 0;
 }
 
 #landing {
