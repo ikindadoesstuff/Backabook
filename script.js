@@ -22,7 +22,12 @@ window.onclick = function (event) {
         }
         document.getElementById("menuButton").innerHTML = "☰ ▼";
     }
+    if (event.target == document.getElementById("home-button")) {
+        window.location.href = `/`
+    }
 }
+
+
 
 // Toggle dropdown menu and change button text
 function toggleMenu() {

@@ -118,29 +118,49 @@
     require "header.php";
     ?>
     <div class="container">
-        <div class="cover-section">
-            <img id="book-cover" class="cover-image" src="" alt="Book Cover" />
-        </div>
-        <div class="details-section">
-            <div id="book-title" class="title">Divergent</div>
-            <div id="book-author" class="author">Veronica Roth</div>
-            <div id="book-price" class="price">$17.99</div>
-            <div class="buy-section">
-                <button id="buy-button" class="buy-btn">Add to Cart</button>
-            </div>
-            <div>
-                <div class="section-title"> 'In a dystopian society, a young girl discovers she is Divergent</div>
+        <?php
 
-            </div>
-            <div>
-                <div class="section-title">Details</div>
-                <p id="book-publisher" class="additional-info"><strong>Publisher:</strong> Katherin Tengen Books</p>
-                <p id="book-published-date" class="additional-info"><strong>Published Date:</strong> 2011</p>
-                <p id="book-isbn" class="additional-info"><strong>ISBN:</strong> 9780062073488</p>
-                <p id="book-pages" class="additional-info"><strong>Pages:</strong> 487</p>
-                <p id="book-language" class="additional-info"><strong>Language:</strong> English</p>
-            </div>
-        </div>
+        require 'databaseConnection.php';
+        if (isset($_GET['isbn']) && !empty($_GET['isbn'])) {
+            $isbn = $_GET['isbn'];
+            
+            $query = "SELECT * FROM `book_infos` WHERE ISBN=".$isbn;
+
+            $result = queryDB($query);
+
+            if ($result) {
+                $book = $result->fetch_all()[0];
+                echo
+                    '<div class="details-section">' .
+                        '<h1 id="book-title">' . htmlspecialchars($book["TITLE"]) . '</h1>' . 
+                        '<h3 id="book-author">' . htmlspecialchars($book["AUTHOR"]) . ' (' . htmlspecialchars($book["PUBLICATION_YEAR"]) . ')</h3>' . 
+                        '<div id="book-price" class="price">$' . htmlspecialchars(number_format($book["PRICE"], 2)) . ' BZD</div>' .
+                        '<div class="buy-section">' .
+                            '<button id="buy-button" class="buy-btn">Add to Cart</button>' .
+                        '</div>' .
+                        '<div>' .
+                            '<div class="section-title">Description</div>' .
+                            '<p id="book-description" class="book-info">' . htmlspecialchars($book["DESCRIPTION"]) . '</p>' . 
+                        '</div>' .
+                        '<div>' .
+                            '<div class="section-title">Details</div>' .
+                            '<p id="book-publisher" class="additional-info"><strong>Publisher:</strong>' . htmlspecialchars($book["PUBLISHER"]) . '</p>' . 
+                            '<p id="book-published-date" class="additional-info"><strong>Published Year:</strong>' . htmlspecialchars($book["PUBLICATION_YEAR"]) . '</p>' . 
+                            '<p id="book-isbn" class="additional-info"><strong>ISBN:</strong> ' . htmlspecialchars($book["ISBN"]) . '</p>' . 
+                            '<p id="book-pages" class="additional-info"><strong>Pages:</strong> ' . htmlspecialchars($book["PAGE_COUNT"]) . '</p>' .
+                            '<p id="book-language" class="additional-info"><strong>Language:</strong> ' . htmlspecialchars($book["LANGUAGE"]) . '</p>' .
+                             '<p id="book-genre" class="additional-info"><strong>Genre:</strong>' . htmlspecialchars($book["GENRE"]) . '</p>' . 
+                        '</div>' .
+                    '</div>';
+            }
+        }
+
+
+        ?>
+        <!-- <div class="cover-section">
+            <img id="book-cover" class="cover-image" src="" alt="Book Cover" />
+        </div> -->
+
     </div>
 
 
