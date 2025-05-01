@@ -1,7 +1,12 @@
 <?php
-
 function performSearch(string $searchInput) {
-    echo $searchInput;   
+    alert($searchInput); 
+    return "test";  
+}
+
+// just for testing
+function alert($msg) {
+    echo "<script type='text/javascript'>alert('$msg');</script>";
 }
 
 ?>
@@ -32,9 +37,9 @@ function performSearch(string $searchInput) {
 
         <!-- Search Bar -->
         <div class="search-container">
-            <form>
+            <form action="<?php performSearch($_GET["searchInput"])?>" method="get">
                 <input type="text" id="searchInput" name="searchInput" placeholder="Search books...">
-                <button id="searchButton" onclick="performSearch($_POST['searchInput'])">Search</button>
+                <input type="submit" id="searchButton" value="Search">
             </form>
         </div>
 
