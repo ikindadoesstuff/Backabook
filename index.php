@@ -20,7 +20,7 @@ function performSearch(string $searchInput) {
         <div class="header-left">
             <div class="bookstore-name">Backabush Bookstore</div>
             <div class="dropdown">
-                <button id="menuButton" onclick="toggleMenu()">☰ ▼</button>
+                <button id="menuButton" onclick="toggleMenu()"> ▼</button>
                 <div id="menuDropdown" class="dropdown-content">
                     <button onclick="redirect('rent')">Rent</button>
                     <button onclick="redirect('purchase')">Purchase</button>
