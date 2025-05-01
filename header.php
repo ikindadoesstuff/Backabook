@@ -25,7 +25,7 @@ function alert($msg) {
 <header>
     <!-- Left Section -->
     <div class="header-left">
-        <div class="bookstore-name">Backabush Bookstore</div>
+        <div class="bookstore-name">BACKABOOK</div>
         <div class="dropdown">
             <button id="menuButton" onclick="toggleMenu()"> ▼</button>
             <div id="menuDropdown" class="dropdown-content">
@@ -39,8 +39,8 @@ function alert($msg) {
 
     <!-- Search Bar -->
     <div class="search-container">
-        <form method="get">
-            <input type="text" id="searchInput" name="searchInput" placeholder="Search books...">
+        <form method="get" id="searchForm">
+            <input type="text" id="searchInput" name="searchInput" placeholder="Search ISBN, Title, Description or Author...">
             <input type="submit" id="searchButton" value="Search">
         </form>
     </div>
