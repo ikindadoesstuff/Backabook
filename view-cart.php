@@ -10,87 +10,10 @@
 
     <!-- Main Content -->
     <main>
-        <div id="search">
-
-            <!-- Sort Filters  -->
-            <div id="search-options-container">
-                <form class="options-menu" method="get" action="search.php">
-                    <h1>Sort
-                        <button type="submit">Apply</button>
-                    </h1>
-                    <!-- this just makes sure the search text stays when a sort is used.  -->
-                    <input type="hidden" name="searchInput"
-                        value="<?php echo isset($_GET['searchInput']) ? htmlspecialchars($_GET['searchInput']) : ''; ?>" />
-                    <label>
-                        <input type="radio" name="sort" value="title" <?php echo (isset($_GET['sort']) && $_GET['sort'] === 'title') ? 'checked' : ''; ?> />
-                        By Title
-                    </label>
-                    <label>
-                        <input type="radio" name="sort" value="price" <?php echo (isset($_GET['sort']) && $_GET['sort'] === 'price') ? 'checked' : ''; ?> />
-                        By Price
-                    </label>
-                    <label>
-                        <input type="radio" name="sort" value="year" <?php echo (isset($_GET['sort']) && $_GET['sort'] === 'year') ? 'checked' : ''; ?> />
-                        By Year
-                    </label>
-                    <label>
-                        Order:
-                        <select name="order">
-                            <option value="ASC" <?php echo (isset($_GET['order']) && $_GET['order'] === 'ASC') ? 'selected' : ''; ?>>Ascending</option>
-                            <option value="DESC" <?php echo (isset($_GET['order']) && $_GET['order'] === 'DESC') ? 'selected' : ''; ?>>Descending</option>
-                        </select>
-                    </label>
-                </form>
-
-                <form class="options-menu" method="get" action="search.php">
-                    <h1>Filter
-                        <button type="submit">Apply</button>
-                    </h1>
-                    <!-- this just makes sure the search text stays when a filter is used. -->
-                    <input type="hidden" name="searchInput"
-                        value="<?php echo isset($_GET['searchInput']) ? htmlspecialchars($_GET['searchInput']) : ''; ?>" />
-
-                    <label>
-                        <h2>Genre:</h2>
-                        <div class="checkbox-group">
-                            <?php
-                            // all the genres in the book info table
-                            // got this using SELECT DISTINCT GENRE FROM book_infos
-                            $genres = [
-                                "Historical Fiction",
-                                "Classic Fiction",
-                                "Contemporary Fiction",
-                                "Fantasy & Supernatural",
-                                "Science Fiction",
-                                "Mystery & Thriller",
-                                "Young Adult",
-                                "Computers & Technology",
-                                "Psychology & Self-Help",
-                                "Social Sciences & History",
-                                "Horror",
-                                "Graphic Novel"
-                            ];
-                            foreach ($genres as $genre) {
-                                $checked = (
-                                    isset($_GET['genres']) && 
-                                    is_array($_GET['genres']) && 
-                                    in_array($genre, $_GET['genres'])) ? 'checked' : '';
-                                ?>
-                                <label>
-                                    <input type="checkbox" name="genres[]" value="<?php echo htmlspecialchars($genre); ?>" <?php echo $checked; ?> >
-                                    <?php echo htmlspecialchars($genre); ?>
-                                </label>
-                                <br>
-                                <?
-                            }
-                            ?>
-                        </div>
-                    </label>
-                </form>
-            </div>
+        <div id="list">
 
             <!-- Search Results -->
-            <div id="list">
+            <div id="result-list">
                 <?php
 
                 require 'databaseConnection.php';

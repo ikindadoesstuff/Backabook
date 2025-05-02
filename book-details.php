@@ -23,41 +23,45 @@
                 $statement->execute();
                 $result = $statement->get_result();
 
-                if ($result) {
+                if ($result->num_rows > 0) {
                     $book = $result->fetch_assoc();
                     ?>
                     <div class="details-section">
-                        <h1 id="book-title"><?php echo htmlspecialchars($book["TITLE"]); ?></h1>
-                        <h3 id="book-author"><?php echo htmlspecialchars($book["AUTHOR"]); ?>
-                            (<?php echo htmlspecialchars($book["PUBLICATION_YEAR"]); ?>)</h3>
-                        <div id="book-price" class="price">$<?php echo htmlspecialchars(number_format($book["PRICE"], 2)); ?> BZD
+                        <h1 id="book-title"><? echo htmlspecialchars($book["TITLE"]); ?></h1>
+                        <h3 id="book-author"><? echo htmlspecialchars($book["AUTHOR"]); ?>
+                            (<? echo htmlspecialchars($book["PUBLICATION_YEAR"]); ?>)</h3>
+                        <div id="book-price" class="price">$<? echo htmlspecialchars(number_format($book["PRICE"], 2)); ?> BZD
                         </div>
                         <div class="buy-section">
-                            <button id="buy-button" class="buy-btn">Add to Cart</button>
+                            <button id="buy-button" class="buy-btn" onclick="addToCart('<? echo htmlspecialchars($book["ISBN"]). ',' . htmlspecialchars($book["TITLE"]); ?>')">Add to Cart</button>
                         </div>
                         <div>
                             <div class="section-title">Description</div>
-                            <p id="book-description" class="book-info"><?php echo htmlspecialchars($book["DESCRIPTION"]); ?></p>
+                            <p id="book-description" class="book-info"><? echo htmlspecialchars($book["DESCRIPTION"]); ?></p>
                         </div>
                         <div>
                             <div class="section-title">Details</div>
                             <p id="book-publisher" class="additional-info"><strong>Publisher:</strong>
-                                <?php echo htmlspecialchars($book["PUBLISHER"]); ?></p>
+                                <? echo htmlspecialchars($book["PUBLISHER"]); ?></p>
                             <p id="book-published-date" class="additional-info"><strong>Published Year:</strong>
-                                <?php echo htmlspecialchars($book["PUBLICATION_YEAR"]); ?></p>
+                                <? echo htmlspecialchars($book["PUBLICATION_YEAR"]); ?></p>
                             <p id="book-isbn" class="additional-info"><strong>ISBN:</strong>
-                                <?php echo htmlspecialchars($book["ISBN"]); ?>
+                                <? echo htmlspecialchars($book["ISBN"]); ?>
                             </p>
                             <p id="book-pages" class="additional-info"><strong>Pages:</strong>
-                                <?php echo htmlspecialchars($book["PAGE_COUNT"]); ?></p>
+                                <? echo htmlspecialchars($book["PAGE_COUNT"]); ?></p>
                             <p id="book-language" class="additional-info"><strong>Language:</strong>
-                                <?php echo htmlspecialchars($book["LANGUAGE"]); ?></p>
+                                <? echo htmlspecialchars($book["LANGUAGE"]); ?></p>
                             <p id="book-genre" class="additional-info"><strong>Genre:</strong>
-                                <?php echo htmlspecialchars($book["GENRE"]); ?></p>
+                                <? echo htmlspecialchars($book["GENRE"]); ?></p>
                         </div>
                     </div>
                 <?
+                } else {
+                    header("Location: error.php");
                 }
+
+                exit;
             }
             ?>
             <!-- <div class="cover-section">
@@ -87,22 +91,6 @@
             pages: 487,
             language: "English"
         };
-
-
-        function loadBookDetails(book) {
-            document.getElementById('book-cover').src = book.coverUrl;
-            document.getElementById('book-cover').alt = Cover of ${ book.title };
-            document.getElementById('book-title').textContent = book.title;
-            document.getElementById('book-author').textContent = by ${ book.author };
-            document.getElementById('book-rating-count').textContent = (${ book.ratingCount } reviews);
-            document.getElementById('book-price').textContent = $${ book.price.toFixed(2) };
-            document.getElementById('book-description').textContent = book.description;
-            document.getElementById('book-publisher').innerHTML = <strong>Publisher:</strong> ${ book.publisher };
-            document.getElementById('book-published-date').innerHTML = <strong>Published Date:</strong> ${ new Date(book.publishedDate).toLocaleDateString() };
-            document.getElementById('book-isbn').innerHTML = <strong>ISBN:</strong> ${ book.isbn };
-            document.getElementById('book-pages').innerHTML = <strong>Pages:</strong> ${ book.pages };
-            document.getElementById('book-language').innerHTML = <strong>Language:</strong> ${ book.language };
-        }
 
         // On page load - load the book details
         loadBookDetails(book);

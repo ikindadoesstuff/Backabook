@@ -21,6 +21,10 @@ html {
     scrollbar-color: #212320 white;
 }
 
+b, i, u {
+    color: inherit;
+}
+
 /* Dropdown and layout styling */
 .dropdown {
     position: relative;
@@ -35,7 +39,6 @@ html {
     background-color: #f9f9f9;
     box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
     border: #736e66 solid 2px;
-    /* z-index: 1; */
 }
 
 .dropdown-content button {
@@ -196,6 +199,15 @@ input[type="text"]:focus {
     gap: 40px;
 }
 
+#about-us {
+    flex-direction: column;
+    /* padding: 0 300px; */
+}
+
+#about-us h1 {
+    border-bottom: #212320 solid 2px;
+}
+
 .cover-section {
     flex: 1;
     max-width: 350px;
@@ -224,7 +236,7 @@ h2 {
     font-weight: bold;
 }
 
-h3 {
+h3, h3 code {
     font-size: 1.2em;
     color: #555;
     margin-bottom: 15px;
@@ -308,7 +320,7 @@ h3 {
     overflow-y: auto;
     max-height: 100px;
 }
-#search-result-list {
+#list {
     /* display: flex; */
     flex-flow: column;
     justify-content: center;
@@ -391,4 +403,35 @@ h3 {
 
 .highlighted-text {
     background-color:#b12704;
+}
+
+#content-not-found {
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+    text-align: center;
+    background-image: url("./img/404.jpg");
+    background-size: cover;
+    height: 80vh;
+}
+#content-not-found * {
+    font-size: 40px;
+}
+#content-not-found h1 {
+    font-size: 80px;
+}
+#not-found-container {
+    /* margin: 10px; */
+    align-items: center;
+}
+h3 > code {
+    background-color: #eeeeee;
+    font-size: 0.8em;
+    /* border-radius: 5px; */
+    box-decoration-break: clone;
+    box-shadow: #eeeeee 0px 0px 10px  ;
+    margin: 10px 30px;
+    padding: 2px;
+    /* padding: 10px;     */
+    /* line-height: 1.1; */
 }

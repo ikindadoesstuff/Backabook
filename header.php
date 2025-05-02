@@ -4,10 +4,10 @@
     <div class="header-left">
         <div class="bookstore-name" id="home-button">BACKABOOK</div>
         <div class="dropdown">
-            <button id="menuButton" onclick="toggleMenu()"> ▼</button>
+            <button id="menuButton" onclick="toggleMenu()"> ☰ ▲ </button>
             <div id="menuDropdown" class="dropdown-content">
-                <button onclick="redirect('trade')">Browse</button>
-                <button onclick="redirect('rent')">About Us</button>
+                <button onclick="redirect('search.php?sort=&order=&searchInput=')">Browse</button>
+                <button onclick="redirect('about-us.php')">About Us</button>
                 <button onclick="redirect('purchase')">Services</button>
             </div>
         </div>
@@ -43,7 +43,7 @@
 
     <!-- Right Section -->
     <div class="header-right">
-        <button onclick="redirect('cart')">  <span class="material-symbols-outlined">shopping_cart</span> Cart</button>
+        <button type="submit" onclick="redirect('view-cart.php')">  <span class="material-symbols-outlined">shopping_cart</span> Cart</button>
         <button onclick="redirect('login')">Login/Sign Up</button>
     </div>
 </header>
