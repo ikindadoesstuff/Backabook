@@ -14,6 +14,12 @@ if ($connection->connect_error) {
 
 function queryDB (string $sql) {
     global $connection;
-    return $connection->prepare($sql);
+    try {
+        return $connection->prepare($sql);
+    } 
+    catch (mysqli_sql_exception $e) {
+        echo $e->getMessage();
+        echo '<pre>'; print_r($e->getTrace()); echo '</pre>';
+    }
 }
 ?>

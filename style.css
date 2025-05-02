@@ -34,7 +34,8 @@ html {
     padding: 10px;
     background-color: #f9f9f9;
     box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
-    z-index: 1;
+    border: #736e66 solid 2px;
+    /* z-index: 1; */
 }
 
 .dropdown-content button {
@@ -44,7 +45,11 @@ html {
 
 .show {
     display: flex;
+    justify-content: center;
     flex-wrap: wrap;
+}
+.show > * {
+    flex: 1;
 }
 
 header {
@@ -119,30 +124,39 @@ footer {
     text-shadow: #907D5F 3px 5px 0px;
 }
 
+select,
+::picker(select) {
+  appearance: base-select;
+}
+
 button,
-input
-{
+input[type="text"],
+select {
     border-radius: 0;
     border: black 1px solid;
     padding: 5px 8px;
     background-color: #ffffff;
     height: 40px;
+    min-width: 40px;
     font-family: inherit;
     color: #212320;
 }
-button, .view-details-button {
+
+button,
+select{
     transition: 0.2s;
-}
-button {
     display: flex;
+    justify-content: centerm;
     align-items: center;
 }
-button:hover {
+
+button:hover{
     box-shadow: rgba(0, 0, 0, 0.1) 3px 5px 0px;
 }
 .view-details-button {
     text-decoration: none;
 }
+
 
 #searchForm {
     display: flex;
@@ -264,9 +278,35 @@ h3 {
     background-position: 0 50%;
     background-size: cover; */
 }
-#filter-container {
-    min-width: 25vw;
+#search-options-container {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    /* margin: 5px; */
+    /* border: #212320 solid 2px; */
+    /* min-width: 18vw; */
+    min-width: 260px;
     border-right: #a3a3a3 solid 2px;
+    background: #D3D3D3;
+    background-image: url("./img/paper-bg.jpg");
+    background-size: cover;
+    /* backdrop-filter: grayscale(30%); */
+    color: white;
+    gap: 10px;
+    overflow-y: auto;
+/* background: linear-gradient(90deg,rgba(33, 35, 32, 1) 0%, rgba(57, 61, 56, 0.81) 29%, rgba(238, 238, 238, 1) 77%); */
+}
+.options-menu {
+    display: flex;
+    flex-direction: column;
+    background-color: #ffffff;
+    border: #a3a3a3 solid 2px;
+    padding: 10px;
+    gap:5px;
+}
+.checkbox-group {
+    overflow-y: auto;
+    max-height: 100px;
 }
 #search-result-list {
     /* display: flex; */
@@ -323,6 +363,9 @@ h3 {
     color: white;
     /* cursor: pointer; */
 }
+/* .search-item:last-child {
+    border-bottom: none;
+} */
 .price-format::first-letter {
     font-size: 80%;
     letter-spacing: 2px;

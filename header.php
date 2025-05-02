@@ -6,10 +6,9 @@
         <div class="dropdown">
             <button id="menuButton" onclick="toggleMenu()"> ▼</button>
             <div id="menuDropdown" class="dropdown-content">
-                <button onclick="redirect('rent')">Rent</button>
-                <button onclick="redirect('purchase')">Purchase</button>
-                <button onclick="redirect('trade')">Trade</button>
-                <button onclick="redirect('auction')">Auction</button>
+                <button onclick="redirect('trade')">Browse</button>
+                <button onclick="redirect('rent')">About Us</button>
+                <button onclick="redirect('purchase')">Services</button>
             </div>
         </div>
     </div>
@@ -17,8 +16,28 @@
     <!-- Search Bar -->
     <div class="search-container">
         <form action="search.php" method="get" id="searchForm">
-            <input type="text" id="searchInput" name="searchInput" placeholder="Search Title, ISBN, Author, Year, etc...">
-            <button type="submit" id="searchButton">Search <span class="material-symbols-outlined">search</span> </button>
+
+        <!-- hidden inputs to keep existing filter and sort -->
+        <!-- Keep sort query -->
+        <input type="hidden" name="sort"
+        value="<?php echo isset($_GET['sort']) ? htmlspecialchars($_GET['sort']) : ''; ?>" />
+        <!-- Keep order query -->
+        <input type="hidden" name="order"
+        value="<?php echo isset($_GET['order']) ? htmlspecialchars($_GET['order']) : ''; ?>" />
+        <!-- Keep genres query -->
+        <?php
+        if (isset($_GET['genres']) && is_array($_GET['genres'])) {
+            foreach ($_GET['genres'] as $genre) {
+            echo '<input type="hidden" name="genres[]" value="' . htmlspecialchars($genre) . '">';
+            }
+        }
+        ?>
+
+        <input type="text" id="searchInput" name="searchInput" autocomplete="off"
+            placeholder="Search Title, ISBN, Author, Year, etc..." <?php echo (isset($_GET['searchInput']) && !empty($_GET['searchInput']))
+                ? 'value="' . htmlspecialchars($_GET['searchInput']) . '"'
+                : ''; ?>>
+        <button type="submit" id="searchButton">Search <span class="material-symbols-outlined">search</span> </button>
         </form>
     </div>
 
