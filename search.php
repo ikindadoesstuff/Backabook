@@ -1,12 +1,6 @@
 <html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Search</title>
-    <link href="./style.css" rel="stylesheet" type="text/css">
-    <link rel="icon" type="image/x-icon" href="/img/favicon.ico">
-</head>
+<?php require "head.php"?>
 
 <body>
     <!-- Header Section, Nav and Search -->
@@ -36,37 +30,47 @@
 
                 function performSearch(string $searchInput)
                 {
-                    // alert($searchInput);
-                    $sqlQuery = "SELECT * FROM `book_infos` WHERE " .
-                        "CAST(ISBN AS CHAR) LIKE '%" . $searchInput . "%' OR " .
-                        "TITLE LIKE '%" . $searchInput . "%' OR " .
-                        "AUTHOR LIKE '%" . $searchInput . "%' OR " .
-                        "CAST(PUBLICATION_YEAR AS CHAR) LIKE '%" . $searchInput . "%' OR " .
-                        "DESCRIPTION LIKE '%" . $searchInput . "%' OR " .
-                        "PUBLISHER LIKE '%" . $searchInput . "%' OR " .
-                        "GENRE LIKE '%" . $searchInput . "%'";
-                    $result = queryDB($sqlQuery);
+                    $searchValue = "%".$searchInput."%";
+                    $sqlQuery = "SELECT * FROM `book_infos` WHERE
+                                CAST(ISBN AS CHAR) LIKE ? OR
+                                TITLE LIKE ? OR
+                                AUTHOR LIKE ? OR
+                                CAST(PUBLICATION_YEAR AS CHAR) LIKE ? OR
+                                DESCRIPTION LIKE ? OR
+                                PUBLISHER LIKE ? OR
+                                GENRE LIKE ?";
+                    $statement = queryDB($sqlQuery);
+                    $statement->bind_param(
+                        "sssssss",
+                        $searchValue,
+                        $searchValue,
+                        $searchValue,
+                        $searchValue,
+                        $searchValue,
+                        $searchValue,
+                        $searchValue,
+                    );
+                    $statement->execute();
+                    $result = $statement->get_result();
 
                     // echo '<div class="search-result-list">';
                     if ($result) {
                         while ($book = $result->fetch_assoc()) {
-                            echo 
-                                '
-                                <div class="search-item">' .
-                                    '<div class="search-item-left">' .
-                                        '<h2>' . htmlspecialchars($book["TITLE"]) . '</h2>' .
-                                        '<h3>' . $book["AUTHOR"] . ' (' . htmlspecialchars($book["PUBLICATION_YEAR"]) . ')</h3>' .
-                                        '<p class="additional-info">' . htmlspecialchars($book["DESCRIPTION"]) . '</p>' .
-                                    '</div>'.
-                                    '<div class="search-item-right">' .
-                                        '<h2>$'. htmlspecialchars(number_format($book["PRICE"],2) ).' BZD</h2>'.
-
-                                        // view details button to go to details page
-                                        '<a href="book-details.php?isbn=' . urlencode($book["ISBN"]) . '" class="view-details-button">' .
-                                            '<button>View Details</button>' .
-                                        '</a>' .
-                                    '</div>'.
-                                '</div>';
+                            ?> 
+                            <div class="search-item">
+                                <div class="search-item-left">
+                                    <h2><?php echo htmlspecialchars($book["TITLE"]); ?></h2>
+                                    <h3><?php echo htmlspecialchars($book["AUTHOR"]); ?> (<?php echo htmlspecialchars($book["PUBLICATION_YEAR"]); ?>)</h3>
+                                    <p class="additional-info"><?php echo htmlspecialchars($book["DESCRIPTION"]); ?></p>
+                                </div>
+                                <div class="search-item-right">
+                                    <h2 class="price-format">$<?php echo htmlspecialchars(number_format($book["PRICE"], 2)); ?> BZD</h2>
+                                    <a href="book-details.php?isbn=<?php echo urlencode($book["ISBN"]); ?>" class="view-details-button">
+                                        <button>View Details</button>
+                                    </a>
+                                </div>
+                            </div>
+                            <?
                         }
                     } else {
                         echo '<div class="error-info">No Books Found</div>';

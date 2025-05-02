@@ -14,9 +14,6 @@ if ($connection->connect_error) {
 
 function queryDB (string $sql) {
     global $connection;
-    $result = $connection->query($sql);
-    if ($result->num_rows > 0) {
-        return $result;
-    }
+    return $connection->prepare($sql);
 }
 ?>

@@ -18,13 +18,13 @@
     <div class="search-container">
         <form action="search.php" method="get" id="searchForm">
             <input type="text" id="searchInput" name="searchInput" placeholder="Search Title, ISBN, Author, Year, etc...">
-            <input type="submit" id="searchButton" value="Search">
+            <button type="submit" id="searchButton">Search <span class="material-symbols-outlined">search</span> </button>
         </form>
     </div>
 
     <!-- Right Section -->
     <div class="header-right">
-        <button onclick="redirect('cart')">Cart</button>
+        <button onclick="redirect('cart')">  <span class="material-symbols-outlined">shopping_cart</span> Cart</button>
         <button onclick="redirect('login')">Login/Sign Up</button>
     </div>
 </header>

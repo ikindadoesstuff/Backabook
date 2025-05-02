@@ -1,6 +1,14 @@
 /* Import fonts */
 @import url('https://fonts.googleapis.com/css2?family=Chonburi&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Rubik+Marker+Hatch&display=swap');
 
+.material-symbols-outlined {
+    font-variation-settings:
+        'FILL' 0,
+        'wght' 275,
+        'GRAD' 50,
+        'opsz' 20
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -122,11 +130,18 @@ input
     font-family: inherit;
     color: #212320;
 }
-button, view-details-button {
+button, .view-details-button {
     transition: 0.2s;
+}
+button {
+    display: flex;
+    align-items: center;
 }
 button:hover {
     box-shadow: rgba(0, 0, 0, 0.1) 3px 5px 0px;
+}
+.view-details-button {
+    text-decoration: none;
 }
 
 #searchForm {
@@ -281,17 +296,42 @@ h3 {
     background: linear-gradient(90deg,rgba(255, 255, 255, 1) 0%, rgba(238, 238, 238, 1) 100%);
     /* cursor: pointer; */
 }
+.search-item-left {
+    /* padding-right: 20%; */
+    /* flex: 0, 0, 40px; */
+    max-width: 60%;
+}
+.search-item-left .additional-info {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    line-clamp: 1;
+    -webkit-line-clamp: 1;
+    /* white-space: nowrap; */
+    overflow: hidden;
+    /* text-overflow: "..."; */
+}
 .search-item-right {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: flex-end; 
     gap: 5px;
+    /* flex: 0, 0, 40px; */
 }
-.search-item:hover > .search-item-right > button{
+.search-item:hover > .search-item-right button{
     background-color: #212320;
     color: white;
     /* cursor: pointer; */
+}
+.price-format::first-letter {
+    font-size: 80%;
+    letter-spacing: 2px;
+    font-weight: 400;
+}
+.price-format:nth {
+    font-size: 80%;
+    letter-spacing: 2px;
+    font-weight: 400;
 }
 .search-item > .author, .search-item > .additional-info {
     /* color: #f3f3f3; */
@@ -304,4 +344,8 @@ h3 {
 } */
 .error-info {
     text-align: center;
+}
+
+.highlighted-text {
+    background-color:#b12704;
 }

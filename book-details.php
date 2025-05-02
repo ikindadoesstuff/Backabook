@@ -1,72 +1,78 @@
-<!DOCTYPE html>
 <html lang="en">
 
-<head>
-
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Backabush Bookstore</title>
-    <link href="./style.css" rel="stylesheet" type="text/css">
-    <link rel="icon" type="image/x-icon" href="/img/favicon.ico">
-</head>
+<?php require "head.php"?>
 
 <body>
     <!-- Header Section, Nav and Search -->
     <?php
     require "header.php";
     ?>
-    <div class="container">
-        <?php
 
-        require 'databaseConnection.php';
-        if (isset($_GET['isbn']) && !empty($_GET['isbn'])) {
-            $isbn = $_GET['isbn'];
-            
-            $query = "SELECT * FROM `book_infos` WHERE ISBN=".$isbn;
+    <!-- Main Content -->
+    <main>
+        <div class="container">
+            <?php
 
-            $result = queryDB($query);
+            require 'databaseConnection.php';
+            if (isset($_GET['isbn']) && !empty($_GET['isbn'])) {
+                $isbn = $_GET['isbn'];
 
-            if ($result) {
-                $book = $result->fetch_assoc();
-                echo
-                    '<div class="details-section">' .
-                        '<h1 id="book-title">' . htmlspecialchars($book["TITLE"]) . '</h1>' . 
-                        '<h3 id="book-author">' . htmlspecialchars($book["AUTHOR"]) . ' (' . htmlspecialchars($book["PUBLICATION_YEAR"]) . ')</h3>' . 
-                        '<div id="book-price" class="price">$' . htmlspecialchars(number_format($book["PRICE"], 2)) . ' BZD</div>' .
-                        '<div class="buy-section">' .
-                            '<button id="buy-button" class="buy-btn">Add to Cart</button>' .
-                        '</div>' .
-                        '<div>' .
-                            '<div class="section-title">Description</div>' .
-                            '<p id="book-description" class="book-info">' . htmlspecialchars($book["DESCRIPTION"]) . '</p>' . 
-                        '</div>' .
-                        '<div>' .
-                            '<div class="section-title">Details</div>' .
-                            '<p id="book-publisher" class="additional-info"><strong>Publisher:</strong> ' . htmlspecialchars($book["PUBLISHER"]) . '</p>' . 
-                            '<p id="book-published-date" class="additional-info"><strong>Published Year:</strong> ' . htmlspecialchars($book["PUBLICATION_YEAR"]) . '</p>' . 
-                            '<p id="book-isbn" class="additional-info"><strong>ISBN:</strong> ' . htmlspecialchars($book["ISBN"]) . '</p>' . 
-                            '<p id="book-pages" class="additional-info"><strong>Pages:</strong> ' . htmlspecialchars($book["PAGE_COUNT"]) . '</p>' .
-                            '<p id="book-language" class="additional-info"><strong>Language:</strong> ' . htmlspecialchars($book["LANGUAGE"]) . '</p>' .
-                             '<p id="book-genre" class="additional-info"><strong>Genre:</strong> ' . htmlspecialchars($book["GENRE"]) . '</p>' . 
-                        '</div>' .
-                    '</div>';
+                $sqlQuery = "SELECT * FROM `book_infos` WHERE ISBN=?";
+                $statement = queryDB($sqlQuery);
+                $statement->bind_param("s", $isbn);
+                $statement->execute();
+                $result = $statement->get_result();
+
+                if ($result) {
+                    $book = $result->fetch_assoc();
+                    ?>
+                    <div class="details-section">
+                        <h1 id="book-title"><?php echo htmlspecialchars($book["TITLE"]); ?></h1>
+                        <h3 id="book-author"><?php echo htmlspecialchars($book["AUTHOR"]); ?>
+                            (<?php echo htmlspecialchars($book["PUBLICATION_YEAR"]); ?>)</h3>
+                        <div id="book-price" class="price">$<?php echo htmlspecialchars(number_format($book["PRICE"], 2)); ?> BZD
+                        </div>
+                        <div class="buy-section">
+                            <button id="buy-button" class="buy-btn">Add to Cart</button>
+                        </div>
+                        <div>
+                            <div class="section-title">Description</div>
+                            <p id="book-description" class="book-info"><?php echo htmlspecialchars($book["DESCRIPTION"]); ?></p>
+                        </div>
+                        <div>
+                            <div class="section-title">Details</div>
+                            <p id="book-publisher" class="additional-info"><strong>Publisher:</strong>
+                                <?php echo htmlspecialchars($book["PUBLISHER"]); ?></p>
+                            <p id="book-published-date" class="additional-info"><strong>Published Year:</strong>
+                                <?php echo htmlspecialchars($book["PUBLICATION_YEAR"]); ?></p>
+                            <p id="book-isbn" class="additional-info"><strong>ISBN:</strong>
+                                <?php echo htmlspecialchars($book["ISBN"]); ?>
+                            </p>
+                            <p id="book-pages" class="additional-info"><strong>Pages:</strong>
+                                <?php echo htmlspecialchars($book["PAGE_COUNT"]); ?></p>
+                            <p id="book-language" class="additional-info"><strong>Language:</strong>
+                                <?php echo htmlspecialchars($book["LANGUAGE"]); ?></p>
+                            <p id="book-genre" class="additional-info"><strong>Genre:</strong>
+                                <?php echo htmlspecialchars($book["GENRE"]); ?></p>
+                        </div>
+                    </div>
+                <?
+                }
             }
-        }
+            ?>
+            <!-- <div class="cover-section">
+                <img id="book-cover" class="cover-image" src="" alt="Book Cover" />
+            </div> -->
 
-
-        ?>
-        <!-- <div class="cover-section">
-            <img id="book-cover" class="cover-image" src="" alt="Book Cover" />
-        </div> -->
-
-    </div>
+        </div>
+    </main>
 
 
     <!-- Footer with Welcome Message -->
     <?php
     require "footer.php";
     ?>
-
+    <!-- 
     <script>
         const book = {
             id: 1,
@@ -105,7 +111,7 @@
         document.getElementById('buy-button').addEventListener('click', () => {
             alert(Added "${book.title}" to your cart!);
         });
-    </script>
+    </script> -->
 </body>
 
 </html>
