@@ -115,6 +115,13 @@ footer {
     text-align: center;
 }
 
+footer img {
+    background-color: #212320;
+    border-radius: 20px;
+    padding: 0 5px;
+    margin-bottom: 15px;
+}
+
 .bookstore-name {
     color: #ffffff;
     font-family: "Rubik Marker Hatch", "Chonburi";
@@ -482,4 +489,8 @@ span {
 
 button:disabled {
     cursor: not-allowed;
+}
+
+#landing .container {
+    border-bottom: #a3a3a3 solid 2px;
 }

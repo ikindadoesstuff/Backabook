@@ -1,5 +1,6 @@
 <footer>
-    <h1>Welcome to Backabook Bookstore</h1>
+    <!-- <h1>Welcome to Backabook Bookstore</h1> -->
+    <img src="img/icon2.png" width="100" height="100">
     <div class="footerbackground">
         <div class="footer">
             <div class="footerinfo">
