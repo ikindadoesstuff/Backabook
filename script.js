@@ -41,8 +41,8 @@ function toggleMenu() {
 
 function addToCart(isbn, title) {
     let cart = { items: [] };
-    if (getCookie("cart")) {
-        cart = JSON.parse(getCookie("cart"));
+    if (getCookie("shopping_cart")) {
+        cart = JSON.parse(getCookie("shopping_cart"));
     }
     let existingItem = null;
 
@@ -59,30 +59,51 @@ function addToCart(isbn, title) {
         cart.items.push({ isbn: isbn, quantity: 1 });
     }
 
-    setCookie("cart", JSON.stringify(cart), 7);
-    alert(`Item ${title} added to cart!`);
+    setCookie("shopping_cart", JSON.stringify(cart), 7);
+    alert(`"${title}" added to cart!`);
+    location.reload();
 }
 
-function removeFromCart(isbn) {
-    if (getCookie("shopping-cart")) {
-        let cart = JSON.parse()
+function removeFromCart(isbn, title, removeAll) {
+    if (getCookie("shopping_cart")) {
+        cart = JSON.parse(getCookie("shopping_cart"));
     }
-    let existingItem = cart.find(item => item.isbn === isbn);
+    let existingItem = null;
+
+    cart.items.forEach((item) => {
+        if (item.isbn == isbn) {
+            existingItem = item;
+        }
+    });
 
     if (existingItem) {
-        existingItem.quantity -= 1;
-        if(existingItem.quantity == 0) {
-            Object.keys(cart).forEach(key => {
-                if (cart[key].isbn == existingItem.isbn) {
-                    delete cart[key];
-                }
-            });
+        if (removeAll) {
+            // deletes by assigning all items to cart items except the one with the isbn to be removed 
+            cart.items = cart.items.filter(item => item.isbn !== isbn);
+        } else {
+            existingItem.quantity -= 1;
+            if (existingItem.quantity === 0) {
+                cart.items = cart.items.filter(item => item.isbn !== isbn);
+            }
         }
     }
 
-    setCookie("cart", JSON.stringify(cart), 7);
-    alert("Book added to cart!");
-    console.log(document.cookie)
+    setCookie("shopping_cart", JSON.stringify(cart), 7);
+    console.log(document.cookie);
+    alert(`"${title}" removed from cart!`);
+    location.reload();
+}
+
+function checkoutCart() {
+    let cart = { items: [] };
+    if (getCookie("shopping_cart")) {
+        cart = JSON.parse(getCookie("shopping_cart"));
+    }
+    let existingItem = null;
+
+    for (let item of cart["items"]) {
+        console.log("Removing " + item["isbn"]);
+    }
 }
 
 function setCookie(name, value, days) {
@@ -102,4 +123,4 @@ function getCookie(name) {
     return null;
 }
 
-console.log("CART ITEMS: ", JSON.parse(getCookie("cart")).items);
+// console.log("CART ITEMS: ", JSON.parse(getCookie("shopping_cart")).items);

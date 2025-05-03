@@ -30,10 +30,18 @@
                         <h1 id="book-title"><? echo htmlspecialchars($book["TITLE"]); ?></h1>
                         <h3 id="book-author"><? echo htmlspecialchars($book["AUTHOR"]); ?>
                             (<? echo htmlspecialchars($book["PUBLICATION_YEAR"]); ?>)</h3>
-                        <div id="book-price" class="price">$<? echo htmlspecialchars(number_format($book["PRICE"], 2)); ?> BZD
-                        </div>
+                        <h2 id="book-price" class="format-price">$<? echo htmlspecialchars(number_format($book["PRICE"], 2)); ?> BZD</h2>
+                        <h3><? echo $book["STOCK"] > 0 ? "IN STOCK" : "OUT OF STOCK"?></h3>
                         <div class="buy-section">
-                            <button id="buy-button" class="buy-btn" onclick="addToCart('<? echo htmlspecialchars($book["ISBN"]). ',' . htmlspecialchars($book["TITLE"]); ?>')">Add to Cart</button>
+                            <div class="quantity-spinner">
+                                <button onclick="removeFromCart('<? echo ($book["ISBN"]) . "', '" . htmlspecialchars($book["TITLE"]); ?>', false)"
+                                <?echo $book["STOCK"] > 0 ? "" : "disabled" ?> >
+                                    <span class="material-symbols-outlined">remove</span> </button>
+                                <button onclick="addToCart('<? echo ($book["ISBN"]) . "', '" . htmlspecialchars($book["TITLE"]); ?>')"
+                                <?echo $book["STOCK"] > 0 ? "" : "disabled" ?> >
+                                    <span class="material-symbols-outlined">add</span> Add to Cart
+                                </button>
+                            </div>
                         </div>
                         <div>
                             <div class="section-title">Description</div>
@@ -61,7 +69,7 @@
                     header("Location: error.php");
                 }
 
-                exit;
+                // exit;
             }
             ?>
             <!-- <div class="cover-section">
@@ -71,35 +79,7 @@
         </div>
     </main>
 
-
-    <!-- Footer with Welcome Message -->
-    <?php
-    require "footer.php";
-    ?>
-    <!-- 
-    <script>
-        const book = {
-            id: 1,
-            title: "Divergent",
-            author: "Veronica Roth",
-            price: 17.99,
-            coverUrl:
-                description: "In a dystopian society, a young girl discovers she is Divergent",
-            publisher: "Katherine Tengen Books",
-            publishedDate: "2011-05-15",
-            isbn: "9780062073488",
-            pages: 487,
-            language: "English"
-        };
-
-        // On page load - load the book details
-        loadBookDetails(book);
-
-        // Add to cart button click handler (placeholder)
-        document.getElementById('buy-button').addEventListener('click', () => {
-            alert(Added "${book.title}" to your cart!);
-        });
-    </script> -->
+    <?php require "footer.php"; ?>
 </body>
 
 </html>

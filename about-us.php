@@ -18,15 +18,23 @@
             </div>
             <div>
                 <h2>Arjun Sugnani</h2>
-                <p>Created wireframe for home page.</p>
+                <ul>
+                <li>Created wireframe for home page.</li>
+                <li>Created book-details page.</li>
+                </ul>
             </div>
             <div>
                 <h2>Deyvon Lozano</h2>
-                <p>Created Database and search functionality.</p>
+                <ul>
+                <li>Created database and search functionality.</li>
+                <li>Implemented cart using cookies.</li>
+                </ul>
             </div>
             <div>
                 <h2>Gulian Alamilla</h2>
-                <p>Implemented Home page and this very About Us page.</p>
+                <ul>
+                    <li>Implemented Home Page and this About Us page.</li>
+                </ul>
             </div>
         </div>
     </main>

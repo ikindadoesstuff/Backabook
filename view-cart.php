@@ -10,125 +10,98 @@
 
     <!-- Main Content -->
     <main>
-        <div id="list">
+        <div class="container">
 
             <!-- Search Results -->
-            <div id="result-list">
+            <div id="list">
                 <?php
 
-                require 'databaseConnection.php';
-
-                if (isset($_GET['searchInput'])) {
-                    performSearch($_GET['searchInput']);
-                }
-
-                function performSearch(string $searchInput)
-                {
-                    $searchValue = "%" . $searchInput . "%";
-                    $sortColumn = "TITLE"; 
-                    $sortOrder = "ASC"; 
-                
-                    if (isset($_GET['sort']) && isset($_GET['order'])) {
-                        if ($_GET['sort'] === 'price') {
-                            $sortColumn = "PRICE";
-                        } elseif ($_GET['sort'] === 'title') {
-                            $sortColumn = "TITLE";
-                        } elseif ($_GET['sort'] === 'year') {
-                            $sortColumn = "PUBLICATION_YEAR";
-                        }
-
-                        if ($_GET['order'] === 'DESC') {
-                            $sortOrder = "DESC";
-                        } else {
-                            $sortOrder = "ASC";
-                        }
-                    }
-
-                    $sqlQuery = "SELECT * FROM `book_infos`";
-
-                    if (!empty($searchInput)) {
-                        $sqlQuery = $sqlQuery . " WHERE".
-                                    "(CAST(ISBN AS CHAR) LIKE ? OR ".
-                                    "TITLE LIKE ? OR ".
-                                    "AUTHOR LIKE ? OR ".
-                                    "CAST(PUBLICATION_YEAR AS CHAR) LIKE ? OR ".
-                                    "DESCRIPTION LIKE ? OR ".
-                                    "PUBLISHER LIKE ? OR ".
-                                    "GENRE LIKE ?)";
-                    }
-
-                    if (isset($_GET['genres']) && is_array($_GET['genres']) && !empty($_GET['genres'])) {
-                        $genres = $_GET['genres'];
-                        $where_condition = !empty($searchInput) ? " NULL=?" : " 0=1"; // so that the OR can be on the left of each added OR clause in the loop
-                        foreach ($genres as $genre) {
-                            $where_condition = $where_condition . ' OR GENRE = "' . $genre . '"';
-                        }
-                        if (!empty($searchInput)) {
-                            $sqlQuery = str_replace("OR GENRE LIKE ?", ") AND (".$where_condition, $sqlQuery);
-                        } else {
-                            $where_condition = " WHERE" . $where_condition;
-                            $sqlQuery = $sqlQuery . $where_condition;
-                        }
-                    }
-
-                    if (!empty($sortColumn) && !empty($sortOrder)) {
-                        $sqlQuery = $sqlQuery . " ORDER BY " . $sortColumn . " " . $sortOrder;
-                    }
-
-                    alert($sqlQuery);
-
-                    $statement = queryDB($sqlQuery);
-                    // alert($statement);
-                    if (!empty($searchInput)) {
-                        $statement->bind_param(
-                            "sssssss",
-                            $searchValue,
-                            $searchValue,
-                            $searchValue,
-                            $searchValue,
-                            $searchValue,
-                            $searchValue,
-                            $searchValue
-                        );
-                    }
-                    $statement->execute();
-                    $result = $statement->get_result();
-
-                    if ($result) {
-                        ?>
-                        <div class="search-item" style="height: 15px;">
-                            <p class="additional-info"> <b> Results: </b> <i> <? echo $result->num_rows ?> books found... </i> </p>
+                    require 'databaseConnection.php';
+                    
+                    $shoppingCart = $_COOKIE["shopping_cart"];
+                    $cartItems = json_decode($shoppingCart,true);
+                    $cartItems = $cartItems["items"];
+                    
+                    $totalPrice = 0; // Initialize total price
+                    ?>
+                    <div class="list-item list-header"> <!--style="height: 15px;"-->
+                        <div class="list-item-left">
+                            <p class="additional-info"> You have <b><? echo count($cartItems) ?> item<? echo count($cartItems) > 1 ? "s" : "" ?> </b> in your cart: </p>
                         </div>
-                        <?
-                        while ($book = $result->fetch_assoc()) {
-                            ?>
-                            <div class="search-item">
-                                <div class="search-item-left">
-                                    <h2><? echo htmlspecialchars($book["TITLE"]); ?></h2>
-                                    <h3><? echo htmlspecialchars($book["AUTHOR"]); ?>
-                                        (<?php echo htmlspecialchars($book["PUBLICATION_YEAR"]); ?>)</h3>
-                                    <p class="additional-info"><? echo htmlspecialchars($book["DESCRIPTION"]); ?></p>
+                        <div class="list-item-right">
+                            <button onclick="checkout()">Clear <span class="material-symbols-outlined">remove_shopping_cart</span> </button>
+                        </div>
+                    </div> <?
+                                        
+                    foreach ($cartItems as $item) {
+                        $isbn = $item["isbn"];
+                        alert("Cart Item " . $isbn);
+                        $sqlQuery = "SELECT * FROM `book_infos` WHERE ISBN = ?";
+
+                        $statement = queryDB($sqlQuery);
+                        alert($sqlQuery. "(".$isbn.")");
+                        
+                        $statement->bind_param(
+                            "s",
+                            $isbn,
+                        );
+                        $statement->execute();
+                        $result = $statement->get_result();
+                        alert($result ? $result: "No Result");
+
+                        if ($result) {
+                            while ($book = $result->fetch_assoc()) {
+                                $totalPrice += $book["PRICE"] * $item["quantity"]; // Add item price * quantity to total
+                                ?>
+                                <div class="list-item">
+                                    <div class="list-item-left">
+                                        <h2><? echo htmlspecialchars($book["TITLE"]); ?></h2>
+                                        <h3><? echo htmlspecialchars($book["AUTHOR"]); ?>
+                                            (<?php echo htmlspecialchars($book["PUBLICATION_YEAR"]); ?>)</h3>
+                                        <p class="additional-info"><? echo htmlspecialchars($book["DESCRIPTION"]); ?></p>
+                                    </div>
+                                    <div class="list-item-right">
+                                        <div>
+                                            <h2 class="price-format">
+                                                $<? echo htmlspecialchars(number_format($book["PRICE"], 2)); ?> BZD x 
+                                                <? echo htmlspecialchars($item["quantity"], 2); ?> 
+                                            </h2>
+                                        </div>
+                                        <div>
+                                            <a href="book-details.php?isbn=<? echo urlencode($book["ISBN"]); ?>"
+                                                class="view-details-button">
+                                                <button>View Details</button>
+                                            </a>
+                                            <div class="quantity-spinner">
+                                                <button onclick="removeFromCart('<? echo ($book["ISBN"]) . "', '" . htmlspecialchars($book["TITLE"]); ?>', false)"> <span class="material-symbols-outlined">remove</span> </button>
+                                                <button onclick="addToCart('<? echo ($book["ISBN"]) . "', '" . htmlspecialchars($book["TITLE"]); ?>')">
+                                                    <span class="material-symbols-outlined">add</span>
+                                                </button>
+                                            </div>
+                                            <button onclick="checkout()"> <span class="material-symbols-outlined">close</span> </button>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="search-item-right">
-                                    <h2 class="price-format">$<? echo htmlspecialchars(number_format($book["PRICE"], 2)); ?> BZD
-                                    </h2>
-                                    <a href="book-details.php?isbn=<? echo urlencode($book["ISBN"]); ?>"
-                                        class="view-details-button">
-                                        <button>View Details</button>
-                                    </a>
-                                </div>
-                            </div>
-                        <?
+                            <?
+                            }
                         }
-                    } else {
-                        echo '<div class="error-info">No Books Found</div>';
                     }
-                }
+                    ?>
+                    <div class="list-item list-header"> <!--style="height: 15px;"-->
+                        <div class="list-item-left">
+                            <!-- <p class="additional-info"> You have <b><? echo count($cartItems) ?> item<? echo count($cartItems) > 1 ? "s" : "" ?> </b> in your cart: </p> -->
+                        </div>
+                        <div class="list-item-right">
+                            <h2>Total: </h2>
+                            <h2 class="price-format">$<? echo htmlspecialchars(number_format($totalPrice, 2)); ?> BZD</h2>
+                            <button onclick="checkout()">Checkout <span class="material-symbols-outlined">shopping_cart</span> </button>
+                        </div>
+                    </div>
+                <?
 
                 // just for testing
                 function alert($msg)
                 {
-                    // echo "<script type='text/javascript'>console.log('$msg');</script>";
                     echo '<pre class="PHP-ALERT" style="display: none">'; print_r($msg); echo '</pre>';
                     ?> <script>for (var x of document.getElementsByClassName("PHP-ALERT")) console.log(x.textContent)</script> <?
                 }

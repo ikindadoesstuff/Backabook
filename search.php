@@ -15,9 +15,9 @@
             <!-- Sort Filters  -->
             <div id="search-options-container">
                 <form class="options-menu" method="get" action="search.php">
-                    <h1>Sort
-                        <button type="submit">Apply</button>
-                    </h1>
+                    <h1>Sort</h1>
+                    <button type="submit">Apply</button>
+
                     <!-- this just makes sure the search text stays when a sort is used.  -->
                     <input type="hidden" name="searchInput"
                         value="<?php echo isset($_GET['searchInput']) ? htmlspecialchars($_GET['searchInput']) : ''; ?>" />
@@ -43,9 +43,10 @@
                 </form>
 
                 <form class="options-menu" method="get" action="search.php">
-                    <h1>Filter
-                        <button type="submit">Apply</button>
-                    </h1>
+                    <h1>Filter</h1>
+                    <button type="submit">Apply</button>
+                    <button type="reset"><span class="material-symbols-outlined">close</span></button>
+
                     <!-- this just makes sure the search text stays when a filter is used. -->
                     <input type="hidden" name="searchInput"
                         value="<?php echo isset($_GET['searchInput']) ? htmlspecialchars($_GET['searchInput']) : ''; ?>" />
@@ -173,20 +174,20 @@
 
                     if ($result) {
                         ?>
-                        <div class="search-item" style="height: 15px;">
+                        <div class="list-item list-header" style="height: 15px;">
                             <p class="additional-info"> <b> Results: </b> <i> <? echo $result->num_rows ?> books found... </i> </p>
                         </div>
                         <?
                         while ($book = $result->fetch_assoc()) {
                             ?>
-                            <div class="search-item">
-                                <div class="search-item-left">
+                            <div class="list-item">
+                                <div class="list-item-left">
                                     <h2><? echo htmlspecialchars($book["TITLE"]); ?></h2>
                                     <h3><? echo htmlspecialchars($book["AUTHOR"]); ?>
                                         (<?php echo htmlspecialchars($book["PUBLICATION_YEAR"]); ?>)</h3>
                                     <p class="additional-info"><? echo htmlspecialchars($book["DESCRIPTION"]); ?></p>
                                 </div>
-                                <div class="search-item-right">
+                                <div class="list-item-right">
                                     <h2 class="price-format">$<? echo htmlspecialchars(number_format($book["PRICE"], 2)); ?> BZD
                                     </h2>
                                     <a href="book-details.php?isbn=<? echo urlencode($book["ISBN"]); ?>"
