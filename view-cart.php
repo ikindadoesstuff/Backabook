@@ -78,7 +78,7 @@
                                                     <span class="material-symbols-outlined">add</span>
                                                 </button>
                                             </div>
-                                            <button onclick="checkout()"> <span class="material-symbols-outlined">close</span> </button>
+                                            <button onclick="removeFromCart('<? echo ($book["ISBN"]) . "', '" . htmlspecialchars($book["TITLE"]); ?>', true)"> <span class="material-symbols-outlined">close</span> </button>
                                         </div>
                                     </div>
                                 </div>
@@ -94,7 +94,7 @@
                         <div class="list-item-right">
                             <h2>Total: </h2>
                             <h2 class="price-format">$<? echo htmlspecialchars(number_format($totalPrice, 2)); ?> BZD</h2>
-                            <button onclick="checkout()">Checkout <span class="material-symbols-outlined">shopping_cart</span> </button>
+                            <button onclick="checkoutCart(<? echo htmlspecialchars(number_format($totalPrice, 2)); ?>)">Checkout <span class="material-symbols-outlined">shopping_cart</span> </button>
                         </div>
                     </div>
                 <?

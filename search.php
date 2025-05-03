@@ -190,10 +190,21 @@
                                 <div class="list-item-right">
                                     <h2 class="price-format">$<? echo htmlspecialchars(number_format($book["PRICE"], 2)); ?> BZD
                                     </h2>
-                                    <a href="book-details.php?isbn=<? echo urlencode($book["ISBN"]); ?>"
-                                        class="view-details-button">
-                                        <button>View Details</button>
-                                    </a>
+                                    <div>
+                                        <? if ($book["STOCK"] > 0) { ?>
+                                            <button onclick="addToCart('<? echo ($book["ISBN"]) . "', '" . htmlspecialchars($book["TITLE"]); ?>')">
+                                                <span class="material-symbols-outlined">add</span>
+                                            </button>
+                                        <? } else { ?>
+                                            <button disabled> 
+                                                <span class="material-symbols-outlined">production_quantity_limits</span> Out of Stock
+                                            </button>
+                                        <? } ?>
+                                        <a href="book-details.php?isbn=<? echo urlencode($book["ISBN"]); ?>"
+                                            class="view-details-button">
+                                            <button>View Details</button>
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         <?

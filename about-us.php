@@ -34,6 +34,14 @@
                 <h2>Gulian Alamilla</h2>
                 <ul>
                     <li>Implemented Home Page and this About Us page.</li>
+                    <li>Implemented 404 functionality.</li>
+                </ul>
+            </div>
+            <div>
+                <h2>Together, we...</h2>
+                <ul>
+                    <li>Collaborated on page-wide styling.</li>
+                    <li>Added filtering and sort options to the search functionality.</li>
                 </ul>
             </div>
         </div>

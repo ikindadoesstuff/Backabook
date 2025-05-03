@@ -60,13 +60,19 @@ function addToCart(isbn, title) {
     }
 
     setCookie("shopping_cart", JSON.stringify(cart), 7);
-    alert(`"${title}" added to cart!`);
+    // alert(`"${title}" added to cart!`);
     location.reload();
 }
 
 function removeFromCart(isbn, title, removeAll) {
+    let cart = { items: [] };
     if (getCookie("shopping_cart")) {
         cart = JSON.parse(getCookie("shopping_cart"));
+    }
+
+    if (cart.items.length === 0) {
+        alert("Your cart is empty!");
+        return;
     }
     let existingItem = null;
 
@@ -90,19 +96,27 @@ function removeFromCart(isbn, title, removeAll) {
 
     setCookie("shopping_cart", JSON.stringify(cart), 7);
     console.log(document.cookie);
-    alert(`"${title}" removed from cart!`);
+    // alert(`"${title}" removed from cart!`);
     location.reload();
 }
 
-function checkoutCart() {
+function checkoutCart(totalPrice=0) {
     let cart = { items: [] };
     if (getCookie("shopping_cart")) {
         cart = JSON.parse(getCookie("shopping_cart"));
     }
-    let existingItem = null;
 
-    for (let item of cart["items"]) {
-        console.log("Removing " + item["isbn"]);
+    if (cart.items.length === 0) {
+        alert("Your cart is empty!");
+        return;
+    }
+
+    const confirmCheckout = confirm(`Your total is $${totalPrice.toFixed(2)} BZD. Do you want to proceed with checkout?`);
+    if (confirmCheckout) {
+        // just resets the shopping cart
+        setCookie("shopping_cart", JSON.stringify({ items: [] }), 7);
+        alert("Thank you for shopping with Backabook!");
+        location.reload();
     }
 }
 
