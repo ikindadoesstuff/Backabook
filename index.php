@@ -1,14 +1,3 @@
-<?php
-$request = $_SERVER['REQUEST_URI'];
-$request = str_replace('/api/', '', $request);
-$apiPath = __DIR__ . '/' . $request;
-
-if ($request != '' && file_exists($apiPath)) {
-    require_once $apiPath;
-    exit();
-}
-?>
-
 <html lang="en">
 
 <?php require "head.php"?>
